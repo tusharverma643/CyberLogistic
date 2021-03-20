@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!-- jsFiddle will insert css and js -->
+    <style>
+        #map {
+  height: 100%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+    </style>
+    <script>
+        let map;
+    function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 42.360, lng: 71.058 },
+    zoom: 8,
+  });
+}
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJoOOb-Ovnplpukhoskt5L12D9lzUhaMY&callback=initMap"
+  type="text/javascript"></script>
+  </body>
+</html>
