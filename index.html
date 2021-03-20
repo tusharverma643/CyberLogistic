@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+</head>
+<header>
+    <center>
+        <div id="Logo">
+            <img src="logo.svg" alt="Cyber Logistics logo" width="350" height="250"><br>
+        </div>
+    </center>
+</header>
+<body>
+    <center><h2 style="color: grey;">IOT based delivery package tracking system</h2></center>
+        <hr style="height:4px;border-width:0;color:gray;background-color: lightskyblue">
+   	
+   		<center><table id="table1" border='1'>
+            <tr>
+                <th>Time Stamp</th>
+                <th>Package Id</th>
+                <th>Destination Name</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
+                <th>Status</th>
+            </tr>
+            <tbody id="tableContent">
+            </tbody>
+        </table></center>
+
+       <!-- <div>Enter tracking id</div> -->
+        <input type="text" id="trid" value="Enter tracking Id">
+        <button onclick="myFunction()">Search</button>
+        
+       
+        
+
+
+       
+          
+            
+        <hr style="height:4px;border-width:0;color:gray;background-color:gray">
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    
+<script>
+    
+    function myFunction() {
+        var inputt = document.getElementById("trid").value;
+    /////////////Ajax Requests////////////
+    $(document).ready(function() {
+        // Fetch the initial table
+        
+        refreshTable();
+    
+        // Fetch every 1 second
+       // setInterval(refreshTable, 1000);
+    });
+    
+    function refreshTable(){
+    
+        // var trHTML = '';	    
+        
+       $.getJSON('https://spreadsheets.google.com/feeds/list/1lKUmZzmz3LjPJbSZWLnKZTG3p5vznaVX-ad-pF-7Shs/1/public/full?alt=json', function(data) {
+        	
+            	var trHTML = '';
+                var index=-1;
+            	for (var i = 0; i < data.feed.entry.length; ++i) {
+                	var myData_map, myData_order;
+                    if(data.feed.entry[i].gsx$packageid.$t==inputt){
+                            index=i;
+                   
+                            }
+
+               }
+               if(index!=-1){
+               trHTML += '<tr><td>' + data.feed.entry[index].gsx$timestamps.$t + 
+                        	  '</td><td>' + data.feed.entry[index].gsx$packageid.$t + 
+                        	  '</td><td>' + data.feed.entry[index].gsx$destinationname.$t +'</td><td>' + data.feed.entry[index].gsx$longitude.$t + '</td><td>' + data.feed.entry[index].gsx$latitude.$t +  '</td><td>' + data.feed.entry[index].gsx$status.$t +'</td></tr>'; 
+                        
+                 }
+                console.log(trHTML);
+        		$('#tableContent').html(trHTML);
+        		var trHTML = '';
+
+        	});	 
+    }	}
+    
+</script>
+</html>
